@@ -51,7 +51,7 @@ class PerceptionSever():
 
 	def handle_look(self, req):
 		print("in look service call back")
-		self.sched = ecto.Scheduler(self.testPlasm)
+		self.sched = ecto.Scheduler(self.lookPlasm)
 		self.sched.execute(niter=1)
 		return LookResponse(0)
 
