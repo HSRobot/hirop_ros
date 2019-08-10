@@ -1,8 +1,8 @@
 #include <ros/ros.h>
 #include <audio_common_msgs/AudioData.h>
 
-#include <asr/audio_source.h>
-#include <asr/hirop_asr.h>
+#include <hirop/asr/audio_source.h>
+#include <hirop/asr/hirop_asr.h>
 
 #include <alsa/asoundlib.h>
 #include <std_msgs/String.h>
