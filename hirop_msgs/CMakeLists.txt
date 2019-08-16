@@ -61,6 +61,8 @@ find_package(catkin REQUIRED COMPONENTS
    CleanPCL.srv
    StartListen.srv
    StopListen.srv
+   GetData.srv
+   SaveData.srv
  )
 
 ## Generate actions in the 'action' folder

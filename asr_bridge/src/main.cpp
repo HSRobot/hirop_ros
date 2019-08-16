@@ -1,5 +1,4 @@
 #include <ros/ros.h>
-#include <audio_common_msgs/AudioData.h>
 
 #include <hirop/asr/audio_source.h>
 #include <hirop/asr/hirop_asr.h>
@@ -129,10 +128,14 @@ public:
 
     void onGetIntent(const char* intent){
 
-        std::cout << intent << std::endl;
+        //std::cout << intent << std::endl;
+
+        const char* test = "你好，你好，你很好。";
 
         std_msgs::String msg;
-        std::string str(intent);
+        std::string str(test);
+
+        std::cout << str << std::endl;
 
         msg.data = str;
         intentPusher.publish(msg);
@@ -146,6 +149,8 @@ public:
         hasr->startListen();
 
         rep.reuslt = 0;
+
+        onGetIntent(NULL);
 
         return true;
     }

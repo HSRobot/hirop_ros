@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <package format="2">
-  <name>asr_bridge</name>
+  <name>dm_bridge</name>
   <version>0.0.1</version>
-  <description>The asr_bridge package</description>
+  <description>The dm_bridge package</description>
 
   <maintainer email="1125290220@qq.com">xkl</maintainer>
 

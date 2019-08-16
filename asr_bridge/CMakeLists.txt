@@ -2,7 +2,6 @@ cmake_minimum_required(VERSION 2.8.3)
 project(asr_bridge)
 
 find_package(catkin REQUIRED COMPONENTS
-  audio_common_msgs
   std_msgs
   hirop_msgs
   roscpp
@@ -11,7 +10,7 @@ find_package(catkin REQUIRED COMPONENTS
 find_package(hirop_asr REQUIRED)
 
 catkin_package(
-  CATKIN_DEPENDS audio_common_msgs roscpp std_msgs hirop_msgs
+  CATKIN_DEPENDS roscpp std_msgs hirop_msgs
 )
 
 include_directories(
