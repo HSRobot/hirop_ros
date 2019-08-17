@@ -1,0 +1,18 @@
+<library path="lib/librviz_map_tool">
+  <class name="hirop_ros/MapFlag"
+         type="hirop_ros::MapFlagTool"
+         base_class_type="rviz::Tool">
+    <description>
+      A panel widget allowing simple diff-drive style robot base control.
+    </description>
+  </class>
+
+  <class name="hirop_ros/FlagManager"
+         type="hirop_ros::MapFlagManagerPanel"
+         base_class_type="rviz::Panel">
+    <description>
+      A panel widget allowing simple diff-drive style robot base control.
+    </description>
+  </class>
+
+</library>
