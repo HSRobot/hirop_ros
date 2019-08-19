@@ -229,9 +229,13 @@ void hirop_ros::MapFlagManagerPanel::on_delFlagBtn_clicked()
     loadFlags(currentMap);
 }
 
+void MapFlagManagerPanel::save(rviz::Config config) const{
+    rviz::Panel::save(config);
+}
+
+void MapFlagManagerPanel::load(const rviz::Config& config){
+    rviz::Panel::load(config);
+}
+
 #include <pluginlib/class_list_macros.hpp>
 PLUGINLIB_EXPORT_CLASS(hirop_ros::MapFlagManagerPanel, rviz::Panel)
-
-
-
-

@@ -39,13 +39,13 @@ public:
      * @brief load      当rviz加载参数的时候会调用该函数
      * @param config    rviz的配置参数
      */
-    virtual void load( const rviz::Config& config ){}
+    virtual void load( const rviz::Config& config );
 
     /**
      * @brief save      当rviz保存参数的时候会调用该函数
      * @param config    rviz的配置参数
      */
-    virtual void save( rviz::Config config ) const{}
+    virtual void save( rviz::Config config ) const;
 
     /**
      * @brief getFlag   当获取到flag时候的回调函数
@@ -61,7 +61,6 @@ public:
      */
     static MapFlagManagerPanel* getInstance() {return _instace;}
 
-    
 private:
 
     /**
