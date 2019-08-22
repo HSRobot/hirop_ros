@@ -1,11 +1,14 @@
 #include "panel.h"
 
+#include <rviz/mesh_loader.h>
+
 #include <QHBoxLayout>
 #include <QLabel>
 
 #include <OGRE/OgreSceneNode.h>
 #include <OGRE/OgreSceneManager.h>
 #include <OGRE/OgreEntity.h>
+
 #include "tool.h"
 
 using namespace hirop_ros;
@@ -21,6 +24,14 @@ MapFlagManagerPanel::MapFlagManagerPanel(QWidget* parent) :
     _instace = this;
 
     _writer = new FileDataWriter();
+
+    scene_manager_ = NULL;
+
+    if( rviz::loadMeshFromResource( "package://rviz_plugin_tutorials/media/flag.dae" ).isNull() )
+    {
+      ROS_ERROR( "MapFlagTool: failed to load model resource");
+      return;
+    }
 
 }
 
@@ -82,6 +93,8 @@ void MapFlagManagerPanel::makeFlagInRviz(std::string name, double x, double y){
     position.y = y;
     position.z = 0;
 
+    std::cout << "scene_manager = " << std::hex << scene_manager_ << std::endl;
+
     Ogre::SceneNode* node = scene_manager_->getRootSceneNode()->createChildSceneNode();
     Ogre::Entity* entity = scene_manager_->createEntity\
             ("package://rviz_plugin_tutorials/media/flag.dae");
@@ -112,6 +125,8 @@ void MapFlagManagerPanel::cleanFlags(){
 
 void MapFlagManagerPanel::saveFlag(std::string map, std::string name, \
                                    double x, double y, double theat){
+
+    currentMap = map;
 
     /**
      * @brief uri   创建URI 固定的uri MAP/mapname/flags/flagname

@@ -43,6 +43,8 @@ set(SRC_FILES
   src/panel.cpp
 )
 
+set(CMAKE_BUILD_TYPE Debug)
+
 add_library(${PROJECT_NAME}
   ${SRC_FILES}
 )

@@ -21,6 +21,8 @@ void MapFlagTool::onInitialize(){
     PoseTool::onInitialize();
     setName( "Map Flag" );
 
+    std::cout << "in tool init" << std::endl;
+
 }
 
 void MapFlagTool::onPoseSet(double x, double y, double theta){
