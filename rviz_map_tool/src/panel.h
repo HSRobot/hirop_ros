@@ -4,6 +4,8 @@
 #include <map>
 
 #include <rviz/panel.h>
+#include <rviz/ogre_helpers/arrow.h>
+
 #include <QPushButton>
 #include <QLineEdit>
 
@@ -66,7 +68,7 @@ private:
     /**
      * @brief makeFlagInRviz   在RVIZ的场景上创建一个flag
      */
-    void makeFlagInRviz(std::string name, double x, double y);
+    void makeFlagInRviz(std::string name, double x, double y, double theta);
 
     /**
      * @brief cleanFlags        清除RVIZ上的所有flag
@@ -94,6 +96,13 @@ private:
      * @return              生成的URI
      */
     DataUri generateUri(std::string name);
+
+    /**
+     * @brief poseDataToTheta   从位姿中获取偏航角
+     * @param data              位姿数据
+     * @return                  偏航角
+     */
+    double poseDataToTheta(PoseData *data);
 
 private Q_SLOTS:
     /**
@@ -136,7 +145,7 @@ private:
     /**
      * @brief nodes             用于保存所有的flag
      */
-    std::map<std::string, Ogre::SceneNode*> nodes;
+    std::map<std::string, rviz::Arrow *> nodes;
 
     /**
      * @brief currentMap        当前选中的地图
