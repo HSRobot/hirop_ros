@@ -1,0 +1,20 @@
+<launch>
+
+  <arg name="use_color"         default="true"/>
+  <arg name="use_depth"         default="true"/>
+  <arg name="rgb_topic"         default="/d435i/color/image_raw"/>
+  <arg name="depth_topic"       default="/d435i/aligned_depth_to_color/image_raw"/>
+  <arg name="camera_frame"      default="d435i_color_optical_frame"/>
+  <arg name="islazy"				default="false"/>
+
+  <node pkg="vision_bridge" type="vision_bridge" name="vision_bridge" output="screen">
+     <param name="use_color" type="bool" value="$(arg use_color)"/>
+     <param name="use_depth" type="bool" value="$(arg use_depth)"/>
+     <param name="rgb_topic" type="str" value="$(arg rgb_topic)"/>
+     <param name="depth_topic" type="str" value="$(arg depth_topic)"/>
+     <param name="camera_frame" type="str" value="$(arg camera_frame)"/>
+	 <param name="islazy"		type="bool" value="$(arg islazy)"/>
+  </node>
+
+</launch>
+

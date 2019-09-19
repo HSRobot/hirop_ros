@@ -1,0 +1,6 @@
+string objectName
+string detectorName
+int64 detectorType
+string detectorConfig
+---
+int64 result
