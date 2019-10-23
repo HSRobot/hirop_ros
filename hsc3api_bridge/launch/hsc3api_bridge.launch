@@ -1,0 +1,12 @@
+<launch>
+
+  <arg name="hsc3_robotIP"    default="10.10.56.214"/>
+  <arg name="hsc3_robotPort"  default="23234"/>
+
+  <node pkg="hsc3api_bridge" type="hsc3api_bridge" name="hsc3api_bridge" output="screen">
+     <param name="hsc3_robotIP" type="str" value="$(arg hsc3_robotIP)"/>
+     <param name="hsc3_robotPort" type="int" value="$(arg hsc3_robotPort)"/>
+  </node>
+
+</launch>
+

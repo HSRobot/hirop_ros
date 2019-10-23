@@ -1,0 +1,4 @@
+GeneralPos gpos
+bool isLinear
+---
+uint64 ret
