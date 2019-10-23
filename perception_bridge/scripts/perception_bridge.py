@@ -22,12 +22,16 @@ class PerceptionSever():
 		self.pclViewer = ecto_pcl.CloudViewer("viewer", window_name="PCD Viewer")
 		self.saver = ecto_pcl.PCDWriter("saver", filename_format="/home/eima/test_%04u.pcd", binary=True)
 		self.loader = ecto_pcl.PCDReader("Reader", filename="/home/eima/test_0000.pcd")
-		self.publisher = hirop_perception.PointCloudPublish("publisher", frame_id="base_link")
+		self.publisher = hirop_perception.PointCloudPublish("publisher", topic_name="/filter_points", frame_id="base_link")
+		self.objectFilter = hirop_perception.ObjectFilter("objectFilter", frame_id="robot_base_link", hight=0.20, width=0.13, length=0.15)
+		self.voxelFilter = hirop_perception.VoxelFilter("voxelFilter")
 
 		self.lookPlasm = ecto.Plasm()
-		self.lookPlasm.connect(self.rosSource["output"] >> self.pclFunsion["input"],\
-			self.rosSource["T"] >>self.pclFunsion["T"], self.rosSource["R"] >>self.pclFunsion["R"], \
-			self.pclFunsion["output"] >> self.pclViewer["input"], self.pclFunsion["output"] >> self.publisher["input"])
+                self.lookPlasm.connect(self.rosSource["output"] >> self.regionFilter["input"], self.regionFilter["output"] >> self.voxelFilter["input"],\
+                        self.rosSource["R"] >> self.pclFunsion["R"], self.rosSource["T"] >> self.pclFunsion["T"],\
+                        self.voxelFilter["output"] >> self.pclFunsion["input"], self.pclFunsion["output"] >> self.objectFilter["input"], \
+                        self.objectFilter["output"] >> self.publisher["input"])
+
 
 		self.savePlasm = ecto.Plasm()
 		self.savePlasm.connect(self.rosSource["output"] >> self.pclFunsion["input"],\
@@ -42,6 +46,10 @@ class PerceptionSever():
 		self.testPlasm.connect(self.rosSource["output"] >> self.pclFunsion["input"], self.pclFunsion["output"] >>  self.regionFilter["input"],\
 					self.pclFunsion["output"] >>  self.pclViewer["input"])
 
+                self.cleanPlasm = ecto.Plasm()
+                self.cleanPlasm.connect(self.rosSource["output"] >> self.pclFunsion["input"], self.pclFunsion["output"] >> self.objectFilter["input"])
+
+                self.handle_clean("init")
 
 	def start(self):
 		self.lookService = rospy.Service('look', Look, self.handle_look)
@@ -73,12 +81,13 @@ class PerceptionSever():
 		return LoadPCLResponse(0)
 
 	def handle_clean(self, req):
-		print "cleannig point cloude"
-		self.pclFunsion.params.clean = True
-		self.sched = ecto.Scheduler(self.lookPlasm)
-		self.sched.execute(niter=1)
-		self.pclFunsion.params.clean = False
-		return CleanPCLResponse(0)
+                print "cleannig point cloude"
+                self.pclFunsion.params.clean = True
+                self.sched = ecto.Scheduler(self.cleanPlasm)
+                self.sched.execute(niter=1)
+                self.pclFunsion.params.clean = False
+                return CleanPCLResponse(0)
+
 
 
 if __name__=="__main__":
