@@ -6,7 +6,7 @@ find_package(catkin REQUIRED COMPONENTS
   rviz
 )
 
-find_package(hirop_datamanager REQUIRED)
+#find_package(hirop_datamanager REQUIRED)
 
 catkin_package(
   CATKIN_DEPENDS roscpp rviz
@@ -34,7 +34,7 @@ add_definitions(-DQT_NO_KEYWORDS)
 include_directories(
   ${PROJECT_BINARY_DIR}
   ${catkin_INCLUDE_DIRS}
-  ${hirop_datamanager_INCLUDE_DIRS}
+#  ${hirop_datamanager_INCLUDE_DIRS}
 )
 
 ## moc生成的相关文件也会直接包含进这里
@@ -45,19 +45,19 @@ set(SRC_FILES
 
 set(CMAKE_BUILD_TYPE Debug)
 
-add_library(${PROJECT_NAME}
-  ${SRC_FILES}
-)
+#add_library(${PROJECT_NAME}
+#  ${SRC_FILES}
+#)
 
-add_dependencies(${PROJECT_NAME} ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS} )
+#add_dependencies(${PROJECT_NAME} ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS} )
+#
+#set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
 
-set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
-
-target_link_libraries(${PROJECT_NAME}
-  ${QT_LIBRARIES}
-  ${catkin_LIBRARIES}
-  ${hirop_datamanager_LIBRARIES}
-)
+#target_link_libraries(${PROJECT_NAME}
+#  ${QT_LIBRARIES}
+#  ${catkin_LIBRARIES}
+#  ${hirop_datamanager_LIBRARIES}
+#)
 
 install(DIRECTORY icons/
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/icons)

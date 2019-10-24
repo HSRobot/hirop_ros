@@ -41,7 +41,7 @@ int Hsc3ApiRos::start()
     set_opmode = n_hsc3.advertiseService("hsc3SetOpMode", &Hsc3ApiRos::setOpModeCB, this);
     move_to = n_hsc3.advertiseService("hsc3MoveTo", &Hsc3ApiRos::moveToCB, this);
     set_workfarm = n_hsc3.advertiseService("hsc3SetWorkFrame", &Hsc3ApiRos::setWorkFrameCB, this);
-    set_iodout = n_hsc3.advertiseService("Hsc3SetIODout", &Hsc3ApiRos::setIODoutCB, this);
+    set_iodout = n_hsc3.advertiseService("hsc3SetIODout", &Hsc3ApiRos::setIODoutCB, this);
 
     return 0;
 }
