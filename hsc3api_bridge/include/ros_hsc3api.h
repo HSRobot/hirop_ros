@@ -30,6 +30,8 @@ public:
     
     int start();
 
+    bool hsc3ReConnect();
+
     bool moveToCB(hirop_msgs::moveTo::Request& req, hirop_msgs::moveTo::Response& res);
     bool setOpModeCB(hirop_msgs::setOpMode::Request& req, hirop_msgs::setOpMode::Response& res);
     bool setVordCB(hirop_msgs::setVord::Request& req, hirop_msgs::setVord::Response& res);

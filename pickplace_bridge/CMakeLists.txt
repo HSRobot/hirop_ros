@@ -11,6 +11,7 @@ add_custom_target(${PROJECT_NAME}_OTHER_FILES ALL WORKING_DIRECTORY ${PROJECT_SO
 find_package(catkin REQUIRED COMPONENTS
   message_generation
   roscpp
+  tf
   std_msgs
   hirop_msgs
   geometry_msgs
@@ -46,3 +47,5 @@ target_link_libraries(pickplace_bridge
   ${hirop_pickplace_LIBRARIES}
   ${catkin_LIBRARIES}
 )
+
+

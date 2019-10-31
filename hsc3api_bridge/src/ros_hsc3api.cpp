@@ -46,6 +46,19 @@ int Hsc3ApiRos::start()
     return 0;
 }
 
+bool Hsc3ApiRos::hsc3ReConnect()
+{
+    if(!(commapi->isConnected())){
+        ret = commapi->connect(robotIp_, (uint16_t)robotPort_);
+        if(ret != 0){
+            ROS_ERROR("connect hsr_robot faile,return value is %d !",ret);
+        }
+        return ret == 0 ? true : false;
+    }
+    return true;
+}
+
+
 bool Hsc3ApiRos::startJogCB(hirop_msgs::startJog::Request &req,hirop_msgs::startJog::Response &res)
 {
     int8_t axid = req.axId;
@@ -54,6 +67,12 @@ bool Hsc3ApiRos::startJogCB(hirop_msgs::startJog::Request &req,hirop_msgs::start
         direct = POSITIVE;
     else
         direct = NEGATIVE;
+
+    if(!hsc3ReConnect()){
+        res.ret = ret;
+        return false;
+    }
+
     ret = proMo->startJog(gpId,axid, direct);
     res.ret = ret;
     return ret == 0 ? true : false;
@@ -62,6 +81,10 @@ bool Hsc3ApiRos::startJogCB(hirop_msgs::startJog::Request &req,hirop_msgs::start
 
 bool Hsc3ApiRos::stopJogCB(hirop_msgs::stopJog::Request &req,hirop_msgs::stopJog::Response &res)
 {
+    if(!hsc3ReConnect()){
+        res.ret = ret;
+        return false;
+    }
     ret = proMo->stopJog(gpId);
     res.ret = ret;
     return ret == 0 ? true : false;
@@ -71,6 +94,12 @@ bool Hsc3ApiRos::setVordCB(hirop_msgs::setVord::Request &req,hirop_msgs::setVord
 {
     int32_t vord = req.vord;
     ret = -1;
+
+    if(!hsc3ReConnect()){
+        res.ret = ret;
+        return false;
+    }
+
     ret = proMo->setJogVord(vord);
     ret = proMo->setVord(vord);
     res.ret = ret;
@@ -80,6 +109,12 @@ bool Hsc3ApiRos::setVordCB(hirop_msgs::setVord::Request &req,hirop_msgs::setVord
 bool Hsc3ApiRos::setOpModeCB(hirop_msgs::setOpMode::Request &req,hirop_msgs::setOpMode::Response &res)
 {
      OpMode mode;
+
+     if(!hsc3ReConnect()){
+         res.ret = ret;
+         return false;
+     }
+
      switch (req.mode) {
      case 1:
          mode = OP_T1;
@@ -108,6 +143,12 @@ bool Hsc3ApiRos::moveToCB(hirop_msgs::moveTo::Request &req,hirop_msgs::moveTo::R
     bool islinear;
     int32_t conifg;
     ret = -1;
+
+    if(!hsc3ReConnect()){
+        res.ret = ret;
+        return false;
+    }
+
     ret = proMo->getConfig(gpId,conifg);
 
     gpos.ufNum = req.gpos.ufNum;
@@ -126,6 +167,12 @@ bool Hsc3ApiRos::moveToCB(hirop_msgs::moveTo::Request &req,hirop_msgs::moveTo::R
 bool Hsc3ApiRos::setWorkFrameCB(hirop_msgs::setWorkFrame::Request &req, hirop_msgs::setWorkFrame::Response &res)
 {
     FrameType frame;
+
+    if(!hsc3ReConnect()){
+        res.ret = ret;
+        return false;
+    }
+
     switch (req.frame) {
     case 1:
         frame = FRAME_JOINT;
@@ -152,6 +199,12 @@ bool Hsc3ApiRos::setIODoutCB(hirop_msgs::setIODout::Request &req, hirop_msgs::se
 {
     int32_t protIo = req.portIndex;
     bool vlaue = req.value;
+
+    if(!hsc3ReConnect()){
+        res.ret = ret;
+        return false;
+    }
+
     ret = proIO->setDout(protIo, vlaue);
     res.ret = ret;
     return  ret == 0 ? true : false;
