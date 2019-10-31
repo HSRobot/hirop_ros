@@ -11,6 +11,7 @@ add_message_files(
   FILES
   ObjectArray.msg
   ObjectInfo.msg
+  GeneralPos.msg
 )
 
 add_service_files(
@@ -27,6 +28,23 @@ add_service_files(
   listDetector.srv
   listObject.srv
   train.srv
+  listGenerator.srv
+  MoveToName.srv
+  MoveToPos.srv
+  Pick.srv
+  PickPlaceStop.srv
+  Place.srv
+  RemoveObject.srv
+  ShowObject.srv 
+  listActuator.srv
+  SetGenActuator.srv
+  moveTo.srv
+  setOpMode.srv
+  setVord.srv
+  startJog.srv
+  stopJog.srv
+  setIODout.srv
+  setWorkFrame.srv
 )
 
 generate_messages(

@@ -7,7 +7,7 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
 )
 
-find_package(hirop_datamanager REQUIRED)
+#find_package(hirop_datamanager REQUIRED)
 
 catkin_package(
   CATKIN_DEPENDS roscpp std_msgs hirop_msgs
@@ -15,24 +15,24 @@ catkin_package(
 
 include_directories(
   include
-  ${hirop_datamanager_INCLUDE_DIRS}
+#  ${hirop_datamanager_INCLUDE_DIRS}
   ${catkin_INCLUDE_DIRS}
 )
 
-add_executable(dm_bridge src/main.cpp)
+#add_executable(dm_bridge src/main.cpp)
 
-add_executable(dm_bridge_test src/test.cpp)
+#add_executable(dm_bridge_test src/test.cpp)
 
-add_dependencies(dm_bridge ${hirop_msgs_EXPORTED_TARGETS})
+#add_dependencies(dm_bridge ${hirop_msgs_EXPORTED_TARGETS})
 
-add_dependencies(dm_bridge_test ${hirop_msgs_EXPORTED_TARGETS})
+#add_dependencies(dm_bridge_test ${hirop_msgs_EXPORTED_TARGETS})
+#
+#target_link_libraries(dm_bridge
+#  ${hirop_datamanager_LIBRARIES}
+#  ${catkin_LIBRARIES}
+#)
 
-target_link_libraries(dm_bridge
-  ${hirop_datamanager_LIBRARIES}
-  ${catkin_LIBRARIES}
-)
-
-target_link_libraries(dm_bridge_test
-  ${hirop_datamanager_LIBRARIES}
-  ${catkin_LIBRARIES}
-)
+#target_link_libraries(dm_bridge_test
+#  ${hirop_datamanager_LIBRARIES}
+#  ${catkin_LIBRARIES}
+#)

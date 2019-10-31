@@ -1,0 +1,4 @@
+string generatorName
+string actuatorName
+---
+bool isSucceeful
