@@ -1,7 +1,7 @@
 #ifndef __ROS_TRAINER_H__
 #define __ROS_TRAINER_H__
 
-#include <vision/trainer.h>
+#include <hirop/vision/trainer.h>
 #include <ros/ros.h>
 #include <hirop_msgs/train.h>
 

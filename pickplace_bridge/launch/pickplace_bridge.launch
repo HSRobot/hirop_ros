@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <launch>
 
-  <arg name="generator_config_path" default="/home/maizitian/work/hirop/config/ClassicGenConfig.yaml"/>
-  <arg name="actuator_config_path"  default="/home/maizitian/work/hirop/config/ClassicPPConfig.yaml"/>
+  <arg name="generator_config_path" default="/home/fshs/work/hirop/config/ClassicGenConfig.yaml"/>
+  <arg name="actuator_config_path"  default="/home/fshs/work/hirop/config/ClassicPPConfig.yaml"/>
 
   <node pkg="pickplace_bridge" type="pickplace_bridge" name="pickplace_bridge" output="screen">
      <param name="generator_config_path" type="str" value="$(arg generator_config_path)"/>
