@@ -49,7 +49,7 @@
 
 - --
 - 设置IO输出
-- 接口名: /Hsc3SetIODout
+- 接口名: /hsc3SetIODout
 - 参数:portIndex, 类型:int32, 数字IO端口值(0 - n-1)
 - 参数:value, 类型:bool, true - 打开端口,　false - 关闭端口
 - 返回值:ret,类型:uint64, 三型的错误码

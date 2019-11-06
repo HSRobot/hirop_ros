@@ -2,10 +2,10 @@
 
   <arg name="use_color"         default="true"/>
   <arg name="use_depth"         default="false"/>
-  <arg name="rgb_topic"         default="/d435i/color/image_raw"/>
-  <arg name="depth_topic"       default="/kinect2/qhd/image_depth_rect"/>
-  <arg name="camera_frame"      default="d435i_color_optical_frame"/>
-  <arg name="islazy"			default="true"/>
+  <arg name="rgb_topic"         default="/kinect2/hd/image_color"/>
+  <arg name="depth_topic"       default="/kinect2/hd/image_depth_rect"/>
+  <arg name="camera_frame"      default="kinect2_rgb_optical_frame"/>
+  <arg name="islazy"				default="true"/>
 
   <node pkg="vision_bridge" type="vision_bridge" name="vision_bridge" output="screen">
      <param name="use_color" type="bool" value="$(arg use_color)"/>
@@ -13,7 +13,7 @@
      <param name="rgb_topic" type="str" value="$(arg rgb_topic)"/>
      <param name="depth_topic" type="str" value="$(arg depth_topic)"/>
      <param name="camera_frame" type="str" value="$(arg camera_frame)"/>
-	 <param name="islazy"	type="bool"	value="$(arg islazy)"/>
+	 <param name="islazy"		type="bool" value="$(arg islazy)"/>
   </node>
 
 </launch>

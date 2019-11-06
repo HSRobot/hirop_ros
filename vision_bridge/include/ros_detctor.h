@@ -1,7 +1,7 @@
 #ifndef __ROS_DETECTOR_H__
 #define __ROS_DETECTOR_H__
 
-#include <vision/detector.h>
+#include <hirop/vision/detector.h>
 #include <ros/ros.h>
 
 #include <hirop_msgs/ObjectArray.h>

@@ -7,7 +7,7 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
 )
 
-find_package(hirop_asr REQUIRED)
+#find_package(hirop_asr REQUIRED)
 
 catkin_package(
   CATKIN_DEPENDS roscpp std_msgs hirop_msgs
@@ -15,17 +15,17 @@ catkin_package(
 
 include_directories(
   include
-  ${hirop_asr_INCLUDE_DIRS}
+#  ${hirop_asr_INCLUDE_DIRS}
   ${catkin_INCLUDE_DIRS}
 )
 
-add_executable(asr_bridge src/main.cpp)
+#add_executable(asr_bridge src/main.cpp)
 
-add_dependencies(asr_bridge ${hirop_msgs_EXPORTED_TARGETS})
+#add_dependencies(asr_bridge ${hirop_msgs_EXPORTED_TARGETS})
 
-target_link_libraries(asr_bridge
-  asound
-  ${hirop_asr_LIBRARIES}
-  ${catkin_LIBRARIES}
-)
+#target_link_libraries(asr_bridge
+#  asound
+#  ${hirop_asr_LIBRARIES}
+#  ${catkin_LIBRARIES}
+#)
 

@@ -7,23 +7,24 @@ import ecto, ecto_pcl, ecto_ros
 import sys
 import time
 import os
+import signal
+from threading import Lock
 from hirop_msgs.srv import *
 
 
+lock = Lock()
+
 class PerceptionSever():
 
-	count = 0
-
 	def __init__(self):
-
-		self.regionFilter = hirop_perception.RegionFilters("regionFilter", maxZ=1)
+		self.regionFilter = hirop_perception.RegionFilters("regionFilter", maxZ=2)
 		self.pclFunsion = hirop_perception.PclFusion("pclFusion")
-		self.rosSource = hirop_perception.PointCloudRos('source', topic_name="/camera/depth/points", world_frame='base_link')
+		self.rosSource = hirop_perception.PointCloudRos('source', topic_name="/kinect2/qhd/points", world_frame='base_link')
 		self.pclViewer = ecto_pcl.CloudViewer("viewer", window_name="PCD Viewer")
 		self.saver = ecto_pcl.PCDWriter("saver", filename_format="/home/eima/test_%04u.pcd", binary=True)
 		self.loader = ecto_pcl.PCDReader("Reader", filename="/home/eima/test_0000.pcd")
 		self.publisher = hirop_perception.PointCloudPublish("publisher", topic_name="/filter_points", frame_id="base_link")
-		self.objectFilter = hirop_perception.ObjectFilter("objectFilter", frame_id="robot_base_link", hight=0.20, width=0.13, length=0.15)
+		self.objectFilter = hirop_perception.ObjectFilter("objectFilter", frame_id="base_link", hight=0.20, width=0.13, length=0.15)
 		self.voxelFilter = hirop_perception.VoxelFilter("voxelFilter")
 
 		self.lookPlasm = ecto.Plasm()
@@ -48,6 +49,8 @@ class PerceptionSever():
 
                 self.cleanPlasm = ecto.Plasm()
                 self.cleanPlasm.connect(self.rosSource["output"] >> self.pclFunsion["input"], self.pclFunsion["output"] >> self.objectFilter["input"])
+	
+		self.keepRun = True
 
                 self.handle_clean("init")
 
@@ -60,7 +63,9 @@ class PerceptionSever():
 	def handle_look(self, req):
 		print("in look service call back")
 		self.sched = ecto.Scheduler(self.lookPlasm)
-		self.sched.execute(niter=1)
+		lock.acquire()
+		self.keepRun = self.sched.execute(niter=1)
+		lock.release()
 		return LookResponse(0)
 
 	def handle_save(self, req):
@@ -70,29 +75,45 @@ class PerceptionSever():
 
 		self.pclFunsion.params.save = True
 		self.sched = ecto.Scheduler(self.savePlasm)
-		self.sched.execute(niter=1)
+		lock.acquire()
+		self.keepRun = self.sched.execute(niter=1)
+		lock.release()
 		self.pclFunsion.params.save = False
 		return SavePCLResponse(0)
 
 	def handle_load(self, req):
 		print "file name = ", req.fileName
 		self.sched = ecto.Scheduler(self.loadPlasm)
+		lock.acquire()
 		self.sched.execute(niter=1)
+		lock.release()
 		return LoadPCLResponse(0)
 
 	def handle_clean(self, req):
                 print "cleannig point cloude"
                 self.pclFunsion.params.clean = True
                 self.sched = ecto.Scheduler(self.cleanPlasm)
-                self.sched.execute(niter=1)
+		lock.acquire()
+                self.keepRun = self.sched.execute(niter=1)
+		lock.release()
                 self.pclFunsion.params.clean = False
                 return CleanPCLResponse(0)
 
-
+def exit(signum, frame):
+	print('Stopping perception bridge')
+	exit()
 
 if __name__=="__main__":
-	ecto_ros.init(sys.argv, "ros_test")
-	rospy.init_node('ros_test')
+	rospy.init_node("perception_bridge")
+	ecto_ros.init(sys.argv, "ros_perception")
 	p = PerceptionSever()
 	p.start()
-	rospy.spin()
+	signal.signal(signal.SIGINT, exit)
+	while not rospy.is_shutdown():
+		signal.signal(signal.SIGINT, exit)
+		lock.acquire()
+		if not p.keepRun:
+			print('Stopping perception bridge')
+			exit()	
+		lock.release()	
+		time.sleep(0.5)
