@@ -45,6 +45,13 @@ add_service_files(
   stopJog.srv
   setIODout.srv
   setWorkFrame.srv
+  connectGripper.srv
+  disConnectGripper.srv
+  openGripper.srv
+  closeGripper.srv
+  listGripper.srv
+  SetGripper.srv
+  StopGripper.srv
 )
 
 generate_messages(
