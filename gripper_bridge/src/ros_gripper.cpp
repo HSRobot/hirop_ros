@@ -15,10 +15,10 @@ GripperService::~GripperService()
 int GripperService::start()
 {
 
-    n_gripper.param("/gripper_bridge/generator_config_path",  gripper_config_path_,
+    n_gripper.param("/gripper_bridge/gripper_config_path",  gripper_config_path_,
                  std::string("/home/ros/work/hirop/config/GripperConfig.yaml"));
 
-    ROS_INFO("generator_config_path_:%s", gripper_config_path_.c_str());
+    ROS_INFO("gripper_config_path_:%s", gripper_config_path_.c_str());
 
     set_gripper = n_gripper.advertiseService(SETGRIPPER, &GripperService::setGripperCB, this);
     list_gripper = n_gripper.advertiseService(LISTGRIPPER, &GripperService::listGripperCB, this);
