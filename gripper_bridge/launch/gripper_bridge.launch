@@ -1,10 +1,12 @@
 <?xml version="1.0"?>
 <launch>
 
-  <arg name="gripper_config_path"  default="/home/fshs/work/hirop/config/GripperConfig.yaml"/>
+  <arg name="gripper_config_path"  default="/home/ros/work/hirop/config/GripperConfig.yaml"/>
+  <arg name="action_config_path"  default="$(find gripper_bridge)/config/GripperConfig.yaml"/>
 
   <node pkg="gripper_bridge" type="gripper_bridge" name="gripper_bridge" output="screen">
      <param name="gripper_config_path" type="str" value="$(arg gripper_config_path)"/>
+     <param name="action_config_path" type="str" value="$(arg action_config_path)"/>
   </node>	
 
 </launch>

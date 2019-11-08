@@ -9,6 +9,7 @@ from sensor_msgs.msg import JointState
 import time
 import thread
 
+
 close_client = None
 open_client = None
 joint_names = ['left_finger_1_joint', 'left_finger_2_joint', 'right_finger_1_joint', 'right_finger_2_joint']
@@ -65,6 +66,7 @@ if __name__ == '__main__':
 
     rospy.wait_for_service(open_gripper)
     rospy.wait_for_service(close_gripper)
+
 
     print("server is ok")
 

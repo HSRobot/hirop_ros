@@ -27,4 +27,13 @@
   <build_depend>hirop_msgs</build_depend>
   <build_export_depend>hirop_msgs</build_export_depend>
   <exec_depend>hirop_msgs</exec_depend>
+
+  <build_depend>actionlib</build_depend>
+  <build_export_depend>actionlib</build_export_depend>
+  <exec_depend>actionlib</exec_depend>
+
+  <build_depend>control_msgs</build_depend>
+  <build_export_depend>control_msgs</build_export_depend>
+  <exec_depend>control_msgs</exec_depend>
+
 </package>
