@@ -4,15 +4,19 @@ import roslib
 import rospy
 import actionlib
 from control_msgs.msg import FollowJointTrajectoryAction
-from hirop_msgs.msg import *
 from hirop_msgs.srv import *
 from sensor_msgs.msg import JointState
 import time
 import thread
 
-sorting_client = None
-joint_names = ['pickup_gripper_joint']
-last_joint_state = [0]
+
+close_client = None
+open_client = None
+joint_names = ['left_finger_1_joint', 'left_finger_2_joint', 'right_finger_1_joint', 'right_finger_2_joint']
+last_joint_state = [0, 0, 0, 0]
+open_server = 'openGripper'
+close_server = 'closeGripper'
+action_server = "gripper_controller/follow_joint_trajectory"
 
 def on_goal(goal_handle):
 
@@ -21,18 +25,18 @@ def on_goal(goal_handle):
     goal_handle.set_accepted()
     traj = goal_handle.get_goal().trajectory
     print(traj)
-    open_sorting =  False
+    open_gripper =  False
     last_joint_state = traj.points[1].positions
 
-    if traj.points[1].positions[0] == 0.0:
-            open_sorting = True
+    if traj.points[1].positions[3] == 0.0:
+            open_gripper = True
 
-    if open_sorting:
-        print("open sorting")
-        sorting_client(0, 1)
+    if open_gripper:
+        print("open gripper")
+        open_client()
     else:
-        print("close sorting")
-        sorting_client(0, 0)
+        print("close gripper")
+        close_client()
 
     time.sleep(1)
     goal_handle.set_succeeded()
@@ -55,19 +59,20 @@ def publish_joint_state(tname):
         r.sleep()
 
 if __name__ == '__main__':
-    rospy.init_node('sorting_action_server')
-    server = actionlib.ActionServer("sorting_controller/follow_joint_trajectory", FollowJointTrajectoryAction,
-                                             on_goal, on_cancel, auto_start=False)
-    print("server action")
+    rospy.init_node('gripper_action_server')
 
-    rospy.wait_for_service('hsc3SetIODout')
+    server = actionlib.ActionServer(action_server, FollowJointTrajectoryAction,
+                                             on_goal, on_cancel, auto_start=False)
+
+    rospy.wait_for_service(open_server)
+    rospy.wait_for_service(close_server)
+
 
     print("server is ok")
 
-    sorting_client = rospy.ServiceProxy('hsc3SetIODout', setIODout)
-
+    open_client = rospy.ServiceProxy(open_server, openGripper)
+    close_client = rospy.ServiceProxy(close_server, closeGripper)
     server.start()
-    print("server is start")
     try:
         thread.start_new_thread(publish_joint_state,("publish_joint_state",))
     except:

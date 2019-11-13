@@ -1,0 +1,13 @@
+parameters: 
+  insprie: 
+    serialNum: /dev/ttyS0
+    baudrate: 115200
+    speed: 500
+    force: 200
+    size_max: 800
+    size_min: 0
+    
+  airpowere:
+    portIndex: 0
+    openVlaue: false
+    closeValue: true

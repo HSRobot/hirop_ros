@@ -4,7 +4,7 @@ import roslib
 import rospy
 import actionlib
 from control_msgs.msg import FollowJointTrajectoryAction
-from hsr_gripper_driver.srv import *
+from hirop_msgs.srv import *
 from sensor_msgs.msg import JointState
 import time
 import thread
@@ -12,10 +12,10 @@ import thread
 
 close_client = None
 open_client = None
-joint_names = ['left_finger_1_joint', 'left_finger_2_joint', 'right_finger_1_joint', 'right_finger_2_joint']
-last_joint_state = [0, 0, 0, 0]
-open_gripper = 'openGripper'
-close_gripper = 'closeGripper'
+joint_names = ['pickup_gripper_joint']
+last_joint_state = [0]
+open_server = 'openGripper'
+close_server = 'closeGripper'
 action_server = "gripper_controller/follow_joint_trajectory"
 
 def on_goal(goal_handle):
@@ -64,14 +64,14 @@ if __name__ == '__main__':
     server = actionlib.ActionServer(action_server, FollowJointTrajectoryAction,
                                              on_goal, on_cancel, auto_start=False)
 
-    rospy.wait_for_service(open_gripper)
-    rospy.wait_for_service(close_gripper)
+    rospy.wait_for_service(open_server)
+    rospy.wait_for_service(close_server)
 
 
     print("server is ok")
 
-    open_client = rospy.ServiceProxy(close_gripper, open_srv)
-    close_client = rospy.ServiceProxy(close_gripper, close_srv)
+    open_client = rospy.ServiceProxy(open_server, openGripper)
+    close_client = rospy.ServiceProxy(close_server, closeGripper)
     server.start()
     try:
         thread.start_new_thread(publish_joint_state,("publish_joint_state",))

@@ -1,0 +1,22 @@
+parameters: 
+    sorting: true
+    followPosture: 
+      R: true
+      P: true
+      Y: false
+    grabPosture: 
+      DIR_R: 3.14
+      DIR_P: 1.5708
+      DIR_Y: 0
+    grabOffset: 
+      x: 0.0
+      y: 0.0
+      z: 0.01
+    placePosture: 
+      DIR_R: 0
+      DIR_P: 0
+      DIR_Y: 0
+    placeOffset: 
+      x: 0
+      y: 0
+      z: 0

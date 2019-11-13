@@ -1,0 +1,57 @@
+parameters: 
+    geometry: 
+      type: BOX
+      L: 0.033
+      W: 0.033
+      H: 0.11
+      mesh: NULL
+      talbe_link: base_link
+      table_pose_x: 0
+      table_pose_y: 0
+      table_pose_z: -0.25
+    moveitConfig: 
+      plannerId: NULL
+      velocity: 0.3
+      accelerated: 0.3
+      
+    pickConfig: 
+      direct_pick: false
+      dist_scale: 1
+      pre_dist_min: 0.01
+      pre_dist_max: 0.1
+      pre_vect_x: 0
+      pre_vect_y: 0
+      pre_vect_z: 0
+      back_dist_min: 0.01
+      back_dist_max: 0.1
+      back_vect_x: 0
+      back_vect_y: 0
+      back_vect_z: 1
+      Roll: []
+      Pitch: []
+      Yaw: []
+
+    placeConfig: 
+      direct_place: false
+      dist_scale: 1
+      pre_dist_min: 0.01
+      pre_dist_max: 0.05
+      pre_vect_x: 0
+      pre_vect_y: 0
+      pre_vect_z: -1
+      back_dist_min: 0.01
+      back_dist_max: 0.05
+      back_vect_x: 0
+      back_vect_y: 0
+      back_vect_z: 1
+      Roll: []
+      Pitch: []
+      Yaw: []
+    
+    gripperConfig:
+      joint_name: right_finger_2_joint
+      open_position: 0.0
+      close_position: -0.3491
+      allowed_coliision: NULL
+
+

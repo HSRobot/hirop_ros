@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<launch>
+
+  <arg name="generator_config_path" default="$(find pickplace_bridge)/config/robotIOGenConfig.yaml"/>
+  <arg name="actuator_config_path"  default="$(find pickplace_bridge)/config/robotIOPPConfig.yaml"/>
+
+  <node pkg="pickplace_bridge" type="pickplace_bridge" name="pickplace_bridge" output="screen">
+     <param name="generator_config_path" type="str" value="$(arg generator_config_path)"/>
+     <param name="actuator_config_path" type="str" value="$(arg actuator_config_path)"/>
+  </node>	
+
+  <node pkg="gripper_bridge" type="gripper_bridge" name="robotIO_action.py" output="screen"/>
+
+</launch>

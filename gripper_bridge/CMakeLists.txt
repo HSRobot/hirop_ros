@@ -12,11 +12,10 @@ add_custom_target(${PROJECT_NAME}_OTHER_FILES ALL WORKING_DIRECTORY ${PROJECT_SO
 find_package(catkin REQUIRED COMPONENTS
   message_generation
   roscpp
+  rospy
   std_msgs
   hirop_msgs
   geometry_msgs
-  actionlib
-  control_msgs
   message_generation
 )
 
@@ -24,13 +23,14 @@ find_package(hirop_gripper REQUIRED)
 
 generate_messages(DEPENDENCIES
   std_msgs
-  actionlib
-  control_msgs
   geometry_msgs
 )
 
 catkin_package(
   CATKIN_DEPENDS
+  roscpp
+  rospy
+  std_msgs
   message_runtime
 )
 
