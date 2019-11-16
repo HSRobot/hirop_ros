@@ -8,6 +8,8 @@ parameters:
     size_min: 0
     
   airpowere:
+    robotIp: 10.10.56.214
+    robotPort: 23234
     portIndex: 0
     openVlaue: false
     closeValue: true
