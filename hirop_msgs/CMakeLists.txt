@@ -52,6 +52,7 @@ add_service_files(
   listGripper.srv
   SetGripper.srv
   StopGripper.srv
+  UploadScene.srv
 )
 
 generate_messages(
