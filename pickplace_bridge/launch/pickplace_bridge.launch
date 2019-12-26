@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<launch>
+
+  <arg name="generator_config_path" default="$(find pickplace_bridge)/config/serialGenConfig.yaml"/>
+  <arg name="actuator_config_path"  default="$(find pickplace_bridge)/config/serialPPConfig.yaml"/>
+
+  <node pkg="pickplace_bridge" type="pickplace_bridge" name="pickplace_bridge" output="screen">
+     <param name="generator_config_path" type="str" value="$(arg generator_config_path)"/>
+     <param name="actuator_config_path" type="str" value="$(arg actuator_config_path)"/>
+  </node>
+
+  <node name="gripper_action" pkg="gripper_bridge" type="serial_action.py"  output="screen"/>	
+
+</launch>
