@@ -218,7 +218,7 @@ bool GripperService::executeCMD(const char *cmd, char *result)
     strcpy(ps, cmd);
     if((ptr=popen(ps, "r"))!=NULL)
     {
-        std::cout<<11111<<std::endl;
+
         while(fgets(buf_ps, 1024, ptr)!=NULL)
         {
             // 可以通过这行来获取shell命令行中的每一行的输出

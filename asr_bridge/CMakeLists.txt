@@ -19,13 +19,16 @@ include_directories(
   ${catkin_INCLUDE_DIRS}
 )
 
-#add_executable(asr_bridge src/main.cpp)
+add_executable(asr_bridge src/main.cpp)
 
-#add_dependencies(asr_bridge ${hirop_msgs_EXPORTED_TARGETS})
+add_dependencies(asr_bridge ${hirop_msgs_EXPORTED_TARGETS})
 
-#target_link_libraries(asr_bridge
-#  asound
-#  ${hirop_asr_LIBRARIES}
-#  ${catkin_LIBRARIES}
-#)
+target_link_libraries(asr_bridge
+  asound
+  ${hirop_asr_LIBRARIES}
+  ${catkin_LIBRARIES}
+  libaiui.so 
+  libmsc.so 
+  libhirop_asr.so
+)
 

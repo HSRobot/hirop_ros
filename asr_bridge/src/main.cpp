@@ -128,12 +128,12 @@ public:
 
     void onGetIntent(const char* intent){
 
-        //std::cout << intent << std::endl;
+        std::cout << intent << std::endl;
 
-        const char* test = "你好，你好，你很好。";
+        // const char* test = "你好，你好，你很好。";
 
         std_msgs::String msg;
-        std::string str(test);
+        std::string str(intent);
 
         std::cout << str << std::endl;
 

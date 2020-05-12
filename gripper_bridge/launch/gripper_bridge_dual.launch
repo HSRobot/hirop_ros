@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<launch>
+
+  <group ns= "UR51">
+    <include file="$(find gripper_bridge)/launch/gripper_bridge.launch" >
+    </include>
+  </group>
+		
+  <group ns= "UR52">
+    <include file="$(find gripper_bridge)/launch/gripper_bridge.launch" >
+     </include>
+  </group>
+
+</launch>

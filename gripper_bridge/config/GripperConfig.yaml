@@ -1,6 +1,6 @@
 parameters: 
   insprie: 
-    serialNum: /dev/ttyS0
+    serialNum: /dev/ttyUSB0
     baudrate: 115200
     speed: 500
     force: 200

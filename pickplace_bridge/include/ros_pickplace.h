@@ -39,12 +39,12 @@ public:
     bool pickCB(hirop_msgs::Pick::Request& req, hirop_msgs::Pick::Response& res);
     bool placeCB(hirop_msgs::Place::Request& req, hirop_msgs::Place::Response& res);
     bool pickplaceStopCB(hirop_msgs::PickPlaceStop::Request& req, hirop_msgs::PickPlaceStop::Response& res);
-
+private:
+    bool initGenAndActParam(std::string generator_config_path_, std::string generatorName,std::string actuator_config_path_, std::string actuatorName);
 private:
     ros::NodeHandle n_pick;
 
     hirop_pickplace::PickPlace *pickplacePtr;
-
     ros::ServiceServer set_genActuator;
     ros::ServiceServer list_generator;
     ros::ServiceServer list_actuator;

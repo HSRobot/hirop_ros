@@ -1,5 +1,5 @@
 #include "ros_pickplace.h"
-
+#define COUT
 PickPlaceService::PickPlaceService(ros::NodeHandle n)
 {
     this->n_pick = n;
@@ -16,9 +16,9 @@ int PickPlaceService::start()
 {
 
     n_pick.param("/pickplace_bridge/generator_config_path",  generator_config_path_,
-                 std::string("/home/ros/work/hirop/config/ClassicGenConfig.yaml"));
+                 std::string("/home/fshs/work/hirop/config/ClassicGenConfig.yaml"));
     n_pick.param("/pickplace_bridge/actuator_config_path",   actuator_config_path_,
-                 std::string("/home/ros/work/hirop/config/ClassicPPConfig.yaml"));
+                 std::string("/home/fshs/work/hirop/config/ClassicPPConfig.yaml"));
 
     ROS_INFO("generator_config_path_:%s", generator_config_path_.c_str());
     ROS_INFO("actuator_config_path_:%s", actuator_config_path_.c_str());
@@ -33,8 +33,25 @@ int PickPlaceService::start()
     move_to_pos = n_pick.advertiseService("moveToPos", &PickPlaceService::moveToPosCB, this);
     move_to_name = n_pick.advertiseService("moveToFoName", &PickPlaceService::moveToNameCB, this);
     pickplace_stop = n_pick.advertiseService("pickplacStop", &PickPlaceService::pickplaceStopCB, this);
-
+    //默认优先启动
+    initGenAndActParam("ClassicGenerator", generator_config_path_, "ClassicActuator", actuator_config_path_);
     return 0;
+}
+
+bool PickPlaceService::initGenAndActParam(std::string generatorName, std::string generator_config_path_,std::string actuatorName,std::string actuator_config_path_)
+{
+    bool isSucceeful = false;
+    int ret = this->pickplacePtr->setGenerator(generatorName, "0", generator_config_path_);
+    if(ret != 0){
+        isSucceeful = false;
+        return isSucceeful;
+    }
+    if(this->pickplacePtr->setActuator(actuatorName, "0", actuator_config_path_) != 0){
+        isSucceeful = false;
+        return isSucceeful;
+    }
+   isSucceeful = true;
+   return isSucceeful;
 }
 
 bool PickPlaceService::setGenActuatorCB(hirop_msgs::SetGenActuator::Request &req, hirop_msgs::SetGenActuator::Response &res)
@@ -45,12 +62,12 @@ bool PickPlaceService::setGenActuatorCB(hirop_msgs::SetGenActuator::Request &req
     std::string act_configFile = actuator_config_path_;
 
 #ifdef COUT
-    ROS_ERROR("generatorName:%s", generatorName.c_str());
-    ROS_ERROR("actuatorName:%s", actuatorName.c_str());
-    ROS_ERROR("generator_config_path_:%s", gen_configFile.c_str());
-    ROS_ERROR("actuator_config_path_:%s", act_configFile.c_str());
+    ROS_INFO("generatorName:%s", generatorName.c_str());
+    ROS_INFO("actuatorName:%s", actuatorName.c_str());
+    ROS_INFO("generator_config_path_:%s", gen_configFile.c_str());
+    ROS_INFO("actuator_config_path_:%s", act_configFile.c_str());
 #endif
-
+/*
     int ret = this->pickplacePtr->setGenerator(generatorName, "0", gen_configFile);
     if(ret != 0){
         res.isSucceeful = false;
@@ -61,7 +78,10 @@ bool PickPlaceService::setGenActuatorCB(hirop_msgs::SetGenActuator::Request &req
         return false;
     }
     res.isSucceeful = true;
-    return true;
+
+*/
+    res.isSucceeful = initGenAndActParam(generatorName, gen_configFile, actuatorName, act_configFile);
+    return res.isSucceeful;
 }
 
 bool PickPlaceService::listGeneratorCB(hirop_msgs::listGenerator::Request &req, hirop_msgs::listGenerator::Response &res)

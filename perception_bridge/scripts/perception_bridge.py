@@ -61,6 +61,12 @@ class PerceptionSever():
 		self.uploadSceneService = rospy.Service('upload_scene', UploadScene, self.handle_uploadScene)
 
 	def handle_look(self, req):
+                self.regionFilter.params.minX = -0.40
+                self.regionFilter.params.maxX = 0.1
+                self.regionFilter.params.minY = -0.15
+                self.regionFilter.params.maxY = 1
+                self.regionFilter.params.minZ = 0
+                self.regionFilter.params.maxZ = 2.1
 		print("in look service call back")
 		self.sched = ecto.Scheduler(self.lookPlasm)
 		lock.acquire()
