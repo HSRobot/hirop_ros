@@ -11,12 +11,14 @@
 #include "hirop_msgs/stopJog.h"
 #include "hirop_msgs/setWorkFrame.h"
 #include "hirop_msgs/setIODout.h"
+#include "hirop_msgs/robotConn.h"
+#include "hirop_msgs/robotError.h"
 
 #include "CommApi.h"
 #include "Hsc3Def.h"
 #include "proxy/ProxyMotion.h"
 #include "proxy/ProxyIO.h"
-
+#include "proxy/ProxySys.h"
 using namespace std;
 using namespace Hsc3::Comm;
 using namespace Hsc3::Proxy;
@@ -39,11 +41,13 @@ public:
     bool stopJogCB(hirop_msgs::stopJog::Request &req, hirop_msgs::stopJog::Response& res);
     bool setWorkFrameCB(hirop_msgs::setWorkFrame::Request& req, hirop_msgs::setWorkFrame::Response& res);
     bool setIODoutCB(hirop_msgs::setIODout::Request& req, hirop_msgs::setIODout::Response& res);
-
+    bool getRobotConnStatusCB(hirop_msgs::robotConn::Request& req, hirop_msgs::robotConn::Response& res);
+    bool getRobotErrorFaultCB(hirop_msgs::robotErrorRequest &req, hirop_msgs::robotErrorResponse& res);
 private:
     CommApi *commapi;
     ProxyMotion *proMo;
     ProxyIO *proIO;
+    ProxySys *proSys;
 
     ros::NodeHandle n_hsc3;
 
@@ -54,6 +58,7 @@ private:
     ros::ServiceServer stop_jog;
     ros::ServiceServer set_workfarm;
     ros::ServiceServer set_iodout;
+    ros::ServiceServer getRobotConnStatus;
 
     std::string robotIp_;
     int robotPort_;

@@ -1,0 +1,6 @@
+
+---
+bool isError
+int8 errorLevel
+string errorMsg
+string dealMsg
