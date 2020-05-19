@@ -28,6 +28,9 @@ int GripperService::start()
     open = n_gripper.advertiseService(OPENGRIPPER, &GripperService::openCB, this);
     close = n_gripper.advertiseService(CLOSEGRIPPER, &GripperService::closeCB, this);
     stop = n_gripper.advertiseService(STOPGRIPPER, &GripperService::stopCB, this);
+    getForce = n_gripper.advertiseService(GETFORCEIPPER,&GripperService::getForceCB, this);
+    moveSeq = n_gripper.advertiseService(MOVESEQGRIPPER,&GripperService::setMoveSeqIndex, this);
+
     return 0;
 }
 
@@ -191,6 +194,23 @@ bool GripperService::stopCB(hirop_msgs::StopGripper::Request &req, hirop_msgs::S
     res.reuslt = true;
     return true;
 
+}
+
+bool GripperService::getForceCB(hirop_msgs::getForce::Request &req, hirop_msgs::getForce::Response &res)
+{
+    std::vector<int> data;
+    if( 0!= gripperPtr->getForceVal(data))
+        return false;
+    res.finger_force = data;
+    return true;
+}
+
+bool GripperService::setMoveSeqIndex(hirop_msgs::moveSeqIndex::Request &req, hirop_msgs::moveSeqIndex::Response &res)
+{
+    if( 0!= gripperPtr->setMoveSeq(req.index))
+        return false;
+    res.sucesss = true;
+    return true;
 }
 
 void GripperService::exit()

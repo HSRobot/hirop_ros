@@ -55,6 +55,9 @@ add_service_files(
   UploadScene.srv
   robotConn.srv
   robotError.srv
+  getForce.srv
+  moveSeqIndex.srv
+  
 )
 
 generate_messages(
