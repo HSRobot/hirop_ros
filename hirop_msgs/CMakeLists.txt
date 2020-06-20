@@ -57,7 +57,8 @@ add_service_files(
   robotError.srv
   getForce.srv
   moveSeqIndex.srv
-  
+  setOnRobotForce.srv
+  getOnRobotForce.srv
 )
 
 generate_messages(
